@@ -9,7 +9,7 @@ fun main() {
     }
 
     fun part1(input: List<String>): Int = input.asInputForPart1().sumOf { priorityOf(it.common()) }
-    fun part2(input: List<String>): Int = input.asInputForPart2().sumOf { priorityOf(it.intersection()) }
+    fun part2(input: List<String>): Int = input.asInputForPart2().sumOf { priorityOf(it.common()) }
 
     val input = readInput("Day03")
 
@@ -52,7 +52,7 @@ private data class Rucksack(val firstCompartment: Set<Char>, val secondCompartme
 }
 
 private data class Group(val a: Rucksack, val b: Rucksack, val c: Rucksack) {
-    fun intersection(): Char {
+    fun common(): Char {
         val intersect = a.all().intersect(b.all()).intersect(c.all())
         assert(intersect.size == 1) { "Assumed rucksacks to have a single common item, but that didn't hold up: $intersect" }
         return intersect.first()
