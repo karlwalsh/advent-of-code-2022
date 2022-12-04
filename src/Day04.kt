@@ -21,12 +21,12 @@ fun main() {
 
 private data class Pair(val first: Assignment, val second: Assignment) {
     fun assignmentsFullyContained(): Boolean = first.fullyContains(second) || second.fullyContains(first)
-    fun assignmentsOverlap(): Boolean = first.contains(second.start) || second.contains(first.start)
+    fun assignmentsOverlap(): Boolean = first.overlaps(second) || second.overlaps(first)
 }
 
 private data class Assignment(val start: Int, val end: Int) {
     fun fullyContains(other: Assignment): Boolean = this.start <= other.start && this.end >= other.end
-    fun contains(other: Int): Boolean = other in start..end
+    fun overlaps(other: Assignment): Boolean = other.start in start..end || start in other.start..other.end
 }
 
 private fun List<String>.asInputForPart1AndPart2(): List<Pair> = this.map { it.toPair() }
