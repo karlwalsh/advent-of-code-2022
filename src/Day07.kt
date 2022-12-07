@@ -1,18 +1,18 @@
 fun main() {
-    fun part1(input: List<String>): Long = input.toRootDirectory()
-        .allDirectories()
+    fun part1(input: List<String>): Long = input.toFileSystem()
+        .allSubDirectories()
         .map { it.size() }
         .filter { it <= 100000 }
         .sum()
 
     fun part2(input: List<String>): Long {
-        val root = input.toRootDirectory()
+        val fileSystem = input.toFileSystem()
 
         val totalDiskSize = 70_000_000
         val requiredDiskSpace = 30_000_000
-        val availableDiskSpace = totalDiskSize - root.size()
+        val availableDiskSpace = totalDiskSize - fileSystem.size()
 
-        return root.allDirectories()
+        return fileSystem.allSubDirectories()
             .map { it.size() }
             .sorted()
             .first { availableDiskSpace + it >= requiredDiskSpace }
@@ -52,14 +52,14 @@ private class Directory(private val parent: Directory? = null) {
         this.filesize += filesize
     }
 
-    fun allDirectories(): List<Directory> {
-        return directories + directories.flatMap { it.allDirectories() }
+    fun allSubDirectories(): List<Directory> {
+        return directories + directories.flatMap { it.allSubDirectories() }
     }
 
     fun size(): Long = filesize + directories.sumOf { it.size() }
 }
 
-private fun List<String>.toRootDirectory(): Directory {
+private fun List<String>.toFileSystem(): Directory {
     //Always start with a root directory
     val root = Directory()
 
