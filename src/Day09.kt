@@ -1,8 +1,5 @@
-@file:OptIn(ExperimentalUnsignedTypes::class)
-
 import Direction.*
 
-@ExperimentalUnsignedTypes
 fun main() {
     fun part1(input: List<String>): Int {
         val motions = input.toMotions()
